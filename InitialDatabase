@@ -1,0 +1,99 @@
+CREATE TABLE directions(
+	direction_id serial,
+	direction_name varchar(50) NOT NULL UNIQUE,
+	CONSTRAINT PK_directions_direction_id PRIMARY KEY(direction_id)
+);
+
+CREATE TABLE users(
+	user_id serial,
+	email varchar(50) NOT NULL,
+	password varchar(100) NOT NULL,
+	role int,
+	CONSTRAINT PK_users_user_id PRIMARY KEY(user_id)
+);
+
+CREATE TABLE teachers(
+	teacher_id serial,
+	first_name varchar(50) NOT NULL,
+	last_name varchar(50) NOT NULL,
+	direction_id int NOT NULL,
+	user_id int,
+	CONSTRAINT PK_teachers_teacher_id PRIMARY KEY(teacher_id),
+	CONSTRAINT FK_teacher_direction FOREIGN KEY(direction_id) REFERENCES directions,
+	CONSTRAINT FK_teacher_user FOREIGN KEY(user_id) REFERENCES users
+);
+
+CREATE TABLE students(
+	student_id serial,
+	first_name varchar(50) NOT NULL,
+	last_name varchar(50) NOT NULL,
+	direction_id int,
+	user_id int,
+	CONSTRAINT PK_students_student_id PRIMARY KEY(student_id),
+	CONSTRAINT FK_student_direction FOREIGN KEY(direction_id) REFERENCES directions,
+    CONSTRAINT FK_student_user FOREIGN KEY(user_id) REFERENCES users
+);
+
+CREATE TABLE shedule(
+	shedule_id serial,
+	direction_id int NOT NULL,
+	teacher_id int NOT NULL,
+	date_start timestamp NOT NULL,
+	CONSTRAINT PK_shedule_shedule_id PRIMARY KEY(shedule_id),
+	CONSTRAINT FK_shedule_direction FOREIGN KEY(direction_id) REFERENCES directions,
+	CONSTRAINT FK_shedule_teacher FOREIGN KEY(teacher_id) REFERENCES teachers
+);
+
+
+INSERT INTO directions (direction_name) VALUES
+('Бизнес аналитика'),
+('Инженер по тестированию'),
+('Веб-разработчик'),
+('Java-разработчик');
+
+INSERT INTO users (email, password, role) VALUES
+('user1@mail.ru', 'AQAAAAEAACcQAAAAEGzzaMq/FJiJut/7eNWnasoTEumkO9kCJ4atZ9TvGO9Z+u9iVrZ0lTlNWb4xMTo/kw==',0),
+('user2@mail.ru', 'AQAAAAEAACcQAAAAEGzzaMq/FJiJut/7eNWnasoTEumkO9kCJ4atZ9TvGO9Z+u9iVrZ0lTlNWb4xMTo/kw==',0),
+('user3@mail.ru', 'AQAAAAEAACcQAAAAEGzzaMq/FJiJut/7eNWnasoTEumkO9kCJ4atZ9TvGO9Z+u9iVrZ0lTlNWb4xMTo/kw==',0),
+('user4@mail.ru', 'AQAAAAEAACcQAAAAEGzzaMq/FJiJut/7eNWnasoTEumkO9kCJ4atZ9TvGO9Z+u9iVrZ0lTlNWb4xMTo/kw==',0),
+('user5@mail.ru', 'AQAAAAEAACcQAAAAEGzzaMq/FJiJut/7eNWnasoTEumkO9kCJ4atZ9TvGO9Z+u9iVrZ0lTlNWb4xMTo/kw==',0),
+('user6@mail.ru', 'AQAAAAEAACcQAAAAEGzzaMq/FJiJut/7eNWnasoTEumkO9kCJ4atZ9TvGO9Z+u9iVrZ0lTlNWb4xMTo/kw==',0),
+('user7@mail.ru', 'AQAAAAEAACcQAAAAEGzzaMq/FJiJut/7eNWnasoTEumkO9kCJ4atZ9TvGO9Z+u9iVrZ0lTlNWb4xMTo/kw==',0),
+('user8@mail.ru', 'AQAAAAEAACcQAAAAEGzzaMq/FJiJut/7eNWnasoTEumkO9kCJ4atZ9TvGO9Z+u9iVrZ0lTlNWb4xMTo/kw==',0),
+('user9@mail.ru', 'AQAAAAEAACcQAAAAEGzzaMq/FJiJut/7eNWnasoTEumkO9kCJ4atZ9TvGO9Z+u9iVrZ0lTlNWb4xMTo/kw==',0),
+('user10@mail.ru', 'AQAAAAEAACcQAAAAEGzzaMq/FJiJut/7eNWnasoTEumkO9kCJ4atZ9TvGO9Z+u9iVrZ0lTlNWb4xMTo/kw==',0),
+
+('teacher1@mail.ru', 'AQAAAAEAACcQAAAAEGzzaMq/FJiJut/7eNWnasoTEumkO9kCJ4atZ9TvGO9Z+u9iVrZ0lTlNWb4xMTo/kw==',1),
+('teacher2@mail.ru', 'AQAAAAEAACcQAAAAEGzzaMq/FJiJut/7eNWnasoTEumkO9kCJ4atZ9TvGO9Z+u9iVrZ0lTlNWb4xMTo/kw==',1),
+('teacher3@mail.ru', 'AQAAAAEAACcQAAAAEGzzaMq/FJiJut/7eNWnasoTEumkO9kCJ4atZ9TvGO9Z+u9iVrZ0lTlNWb4xMTo/kw==',1),
+('teacher4@mail.ru', 'AQAAAAEAACcQAAAAEGzzaMq/FJiJut/7eNWnasoTEumkO9kCJ4atZ9TvGO9Z+u9iVrZ0lTlNWb4xMTo/kw==',1),
+('teacher5@mail.ru', 'AQAAAAEAACcQAAAAEGzzaMq/FJiJut/7eNWnasoTEumkO9kCJ4atZ9TvGO9Z+u9iVrZ0lTlNWb4xMTo/kw==',1)
+;
+
+INSERT INTO teachers (first_name, last_name, direction_id,user_id) VALUES
+('Марат', 'Аббасов', 1, 11),
+('Радий', 'Хабиров', 2, 12 ),
+('Касымбай', 'Калмыков', 3, 13),
+('Марсель', 'Исаев', 4, 14),
+('Эмир', 'Ахмеров', 4, 15);
+
+INSERT INTO students (first_name, last_name, direction_id, user_id) VALUES
+('Мухамед', 'Амонов', 1, 1),
+('Виктор','Садрисламов',1, 2),
+('Анастасия', 'Сергеева', 1, 3),
+('Евгений', 'Салытков', 2, 4),
+('Александра', 'Акилова', 2, 5),
+('Виктор', 'Неретин', 3, 6),
+('Иван', 'Миронов', 3, 7),
+('Ренат', 'Нумеров', 3, 8),
+('Ильгиз', 'Ишниязов', 4, 9),
+('Алексей', 'Алексеев', 4, 10);
+
+INSERT INTO shedule (direction_id, teacher_id, date_start) VALUES
+(1, 1, '2022-06-12 12:00:00'),
+(1, 1, '2022-06-15 12:00:00'),
+(2, 2, '2022-06-12 15:00:00'),
+(2, 2, '2022-06-16 15:00:00'),
+(3, 3, '2022-06-13 13:00:00'),
+(4, 4, '2022-06-13 16:00:00'),
+(4, 5, '2022-06-15 13:00:00');
