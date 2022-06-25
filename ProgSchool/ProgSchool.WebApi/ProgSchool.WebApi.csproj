@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.25" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProgSchool.BLL\ProgSchool.BLL.csproj" />
+    <ProjectReference Include="..\ProgSchool.DAL\ProgSchool.DAL.csproj" />
+  </ItemGroup>
+
+
+</Project>
